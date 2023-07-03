@@ -5,4 +5,4 @@ O objetivo é demonstrar a construção de um __Algoritmo de Machine Learning do
 
 Os detalhes do projeto podem ser observados neste [jupyter notebook](https://github.com/pedrohrafael/data-science/blob/main/building-logistic-regression/notebooks/LogisticRegression.ipynb).
 
-![](https://raw.githubusercontent.com/pedrohrafael/data-science/main/img/logistic-regression.png)
+![](https://raw.githubusercontent.com/pedrohrafael/pedrohrafael/main/img/logistic-regression.png)
