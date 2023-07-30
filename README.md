@@ -17,6 +17,7 @@ As bases principais utilizadas para definir os cálculos das funções do algori
 A __regressão logística__ pode ser usada para vários problemas de classificação binária, como detecção de spam, previsão de diabetes, se cliente vai comprar um produto ou vai deixar de ser um cliente, etc. Se trata de um __algoritmo linear__, assim como a [regressão linear](https://pt.wikipedia.org/wiki/Regress%C3%A3o_linear), porém suas saídas são probabilidades dos eventos acontecerem, sendo essas probabilidades transformadas em valores geralmente binários (0 ou 1). 
 
 Para construir o algoritmo da regressão logistica será necessário definir parametros de iniciais, uma __função de custo__ e uma __função de otimização__ que irá de for iterativa, atualizar os parametros até a convergencia. O algoritmo usa da __função logística sigmoide__ para modelar a probabilidade dos eventos estimados.
+#
 
 ### Função __Sigmoide__
 
@@ -49,6 +50,9 @@ import numpy as np
 def sigmoid(x):
     return 1 / (1 + np.exp(-x))
 ```
+
+#
+
 ### Função de __custo / perda__
 
 As funções de perda são usadas para determinar o custo (também conhecido como "erro") entre a saída do algoritmo `ŷ` e o valor alvo real `y`, ou seja, a função de perda gera uma métrica que indica o quão longe as estimativas geradas estão dos valores reais. Como o objetivo é ser o mais assertivo quanto possível, é necessário reduzir os custos gradativamente e isso é possível ser feito utilizando uma função de otimização.
@@ -66,6 +70,9 @@ def log_loss(y, yhat):
     loss = (-1 / m) * np.sum((y.T.dot(np.log(yhat))) + ((1 - y).T.dot(np.log(1 - yhat))))
     return loss
 ```
+
+#
+
 ### Função de __otimização__
 
 Como o objetivo é minimizar a função de custo, será necessário ajustar os parametros (pesos) até alcançar a convergencia. Esta otimização dos parametros pode ser obtida através da derivada da função de custo em relação a cada peso. Como função de otimização, será aplicado o __gradiente descendente__ (descida do gradiente).
@@ -90,6 +97,8 @@ def gradient_descent(X, y, theta, yhat, learning_rate):
     theta -= learning_rate * ((1 / m) * (np.dot(X.T, (yhat - y))))
     return theta
 ```
+
+#
 
 ### Regressão Logistica
 
