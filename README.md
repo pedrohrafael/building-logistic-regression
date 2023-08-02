@@ -34,7 +34,7 @@ Representada graficamente:
 Onde:
 - __σ(z)__ = Estimativa de probabilidade (p), sendo uma saída entre 0 e 1
 - __z__ = Entrada para a função (estimativa do algoritmo, por exemplo βx+α)
-- __e__ = [Número de Euler](https://pt.wikipedia.org/wiki/E_(constante_matem%C3%A1tica)\), base dos logaritmos naturais
+- __e__ = [Número de Euler](https://pt.wikipedia.org/wiki/E_(constante_matem%C3%A1tica)), base dos logaritmos naturais
 
 Como __limite de decisão__ para mapear as probabilidades (p) em classes discretas binárias (0 ou 1) consideramos o valor de __0.5__, conforme a regra abaixo:
 
@@ -43,7 +43,7 @@ p ≥ 0.5, classe=1 \\
 p < 0.5, classe=0
 $$
 
-```
+```python
 # Definindo a função sigmoide em python
 import numpy as np
 
@@ -63,7 +63,7 @@ $$ J(\theta) = -\frac{1}{m}\sum_{n=1}^m[y^{(i)}log(\hat{y}^{(i)})+(1-y^{(i)})log
 
 [1] [Probability for Machine Learning - Discover How To Harness Uncertainty With Python, página 102](https://dokumen.pub/probability-for-machine-learning-discover-how-to-harness-uncertainty-with-python-v19nbsped.html)
 
-```
+```python
 # Definindo a função de custo em python
 def log_loss(y, yhat):
     m = len(y)
@@ -90,21 +90,19 @@ Onde __α__ é a taxa de aprendizado (learning rate).
 
 Para mais detalhes sobre a derivação da função de custo da regressão logistica, indico o artigo [The Derivative of Cost Function for Logistic Regression](https://medium.com/analytics-vidhya/derivative-of-log-loss-function-for-logistic-regression-9b832f025c2d)
 
-```
+```python
 # Definindo função de otimização em python
 def gradient_descent(X, y, theta, yhat, learning_rate):  
     m = len(y)
     theta -= learning_rate * ((1 / m) * (np.dot(X.T, (yhat - y))))
     return theta
 ```
-
 #
+### Algoritmo da Regressão Logistica
 
-### Regressão Logistica
+Algoritimo disponível em `../src/LogisticRegression.py`
 
-Algoritimo completo disponivel em `../src/LogisticRegression.py`
-
-```
+```python
 class LogisticRegression:
     """
     Classificador de regressão logística.
@@ -162,3 +160,30 @@ class LogisticRegression:
         proba = self.__sigmoid(z)
         return np.asarray([1 if p > 0.5 else 0 for p in proba])
 ```
+
+### Convergencia do modelo
+
+```python
+from sklearn.datasets import make_classification
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
+import matplotlib.pyplot as plt
+
+# gerando dados
+X, y = make_classification(n_samples=2000, n_features=4, random_state=42)
+
+# split dos dados
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=42)
+
+# ajuste do modelo e previsao
+n_iterations = 3000
+lr = LogisticRegression(n_iterations=n_iterations)
+lr.fit(X_train, y_train)
+y_pred = lr.predict(X_test)
+
+# Redução da perda por iterações e acuracia do modelo
+plt.plot(lr.losses);
+plt.title("Loss throughout {} iterations | Accuracy: {}".format(n_iterations, accuracy_score(y_test, y_pred).round(4)));
+```
+
+![transferir](https://github.com/pedrohrafael/building-logistic-regression/assets/59976208/8f8bf3e8-bdfc-4bbc-b254-854281e560ff)
